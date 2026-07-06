@@ -80,7 +80,7 @@ the provisioning network and "network boot first" in their firmware.
 
 | Role | Daemon | Package | Port |
 |------|--------|---------|------|
-| DHCP | ISC `dhcpd` | `dhcp-server` | UDP 67 |
+| DHCP | `dhcpd` | `dhcp-server` | UDP 67 |
 | DNS  | BIND `named` | `bind` | UDP/TCP 53 |
 | TFTP | `in.tftpd` (socket-activated) | `tftp-server` | UDP 69 |
 | Install tree + Kickstart | `httpd` | `httpd` | TCP 80 |
@@ -105,21 +105,6 @@ itself can reach the internet to install packages. DHCP is deliberately bound to
 `ens224` only, so it never leaks onto anything else.
 
 ---
-
-## How the daemons hand off (mental model)
-
-The whole point of using separate daemons instead of dnsmasq is that you can *see* the
-handoff. The boot of one target goes:
-
-1. **dhcpd** answers the client's DHCP request with an IP **plus** two PXE-specific
-   options: `next-server` (where TFTP is) and `filename` (`pxelinux.0`). Those two lines
-   are what turn ordinary DHCP into PXE.
-2. The client TFTPs `pxelinux.0` from **tftpd**, which then requests a config file named
-   after the client's own MAC (`01-<mac>`), then pulls `vmlinuz` + `initrd.img`.
-3. The installer boots and uses its kernel arguments to fetch the **repo** and the
-   **Kickstart** file from **httpd**.
-4. **named** provides forward and reverse name resolution so the installed nodes have
-   real FQDNs — the production touch a dnsmasq lab usually skips.
 
 Each daemon does one job, is configured in its own file, logs to its own place, and can
 be restarted independently. That separation is the lesson.
