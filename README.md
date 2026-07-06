@@ -1,6 +1,7 @@
 <h1 align="center">
 PXE Provisioning with MACs and Kickstart Files
 </h1>  
+<hr/>
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/143367fb-07d3-4ed6-8be6-e4bf6c60d7bf" width="200" alt="PXE Logo" />
