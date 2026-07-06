@@ -52,8 +52,6 @@ bare-metal fleets in production, built here from the individual, dedicated daemo
 - [Booting a target](#booting-a-target)
 - [Adding more nodes (any number of servers)](#adding-more-nodes-any-number-of-servers)
 - [Troubleshooting](#troubleshooting)
-- [Security notes](#security-notes)
-- [ISC dhcpd end-of-life note](#isc-dhcpd-end-of-life-note)
 
 ---
 
