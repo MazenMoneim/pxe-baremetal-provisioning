@@ -1,5 +1,5 @@
 <h1 align="center">
-PXE Provisioning with MACs and Kickstart Files
+PXE Provisioning with MAC Addresses and Kickstart Files
 </h1>  
 
 
