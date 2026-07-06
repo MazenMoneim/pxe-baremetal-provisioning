@@ -1,4 +1,21 @@
-# ztp-pxe-provisioning
+<h1 align="center">
+PXE Provisioning with MACs and Kickstart Files
+</h1>  
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/143367fb-07d3-4ed6-8be6-e4bf6c60d7bf" width="200" alt="PXE Logo" />
+</p>
+
+
+<p align="center">  
+  <img src="https://img.shields.io/badge/-PXE%20Boot-green?style=flat" />  
+  <img src="https://img.shields.io/badge/-TFTP-blue?style=flat" />  
+  <img src="https://img.shields.io/badge/-DHCP-orange?style=flat" />  
+  <img src="https://img.shields.io/badge/-Kickstart-red?style=flat" /> 
+  <img src="https://img.shields.io/badge/-NFS-purple?style=flat" />
+</p> 
+
+<hr/>
 
 > Demo for automating bare-metal provisioning of RHEL 9 servers via Zero Touch Provisioning (ZTP), PXE, and Kickstart.
 
