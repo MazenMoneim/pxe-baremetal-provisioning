@@ -533,16 +533,6 @@ sudo dnf install -y pykickstart
 ksvalidator /var/www/html/ks/ks-node1.cfg     # must print nothing = clean
 ```
 
-> **Two gotchas that will bite you** (both hit during development):
-> 1. **Line continuations.** A `\` line-continuation must be the *last* character on the
->    line — no trailing space, and the file must use Unix (LF) endings, not Windows
->    (CRLF). A stray `\r` turns a valid line into "unrecognized arguments". Prefer
->    putting `network` and `user` on one long single line. Normalize with
->    `sed -i 's/\r$//' file`.
-> 2. **Placeholders.** The `sshkey`/`rootpw`/`user` lines above contain `REPLACE_WITH...`
->    on purpose. If you leave them, the installer writes the literal placeholder and SSH
->    key login silently fails (falls back to password). Substitute real values.
-
 ---
 
 ### 8. Firewall
@@ -647,35 +637,4 @@ VMnet adapter lost its static address — VMware's NAT/DHCP services or the virt
 adapter need restarting (or a Virtual Network Editor *Restore Defaults*). Making guest
 NICs **static** removes the dependency on that host-side DHCP entirely.
 
----
 
-## Security notes
-
-This is a **lab**. Before pushing anything to a public repo or using it for real:
-
-- **Never commit real password hashes or SSH keys.** The Kickstart above uses
-  `REPLACE_WITH_...` placeholders for exactly this reason. Generate hashes locally
-  (`openssl passwd -6`) and inject them at build time; keep real keys out of Git.
-- Kickstart files here are served over **plain HTTP** on an isolated network. Anything on
-  that subnet can read them — fine for an air-gapped lab, not for production. Production
-  protects Kickstarts (HTTPS, access control, or secrets injected by an automation layer).
-- The passwordless-sudo `%post` rule is a lab convenience. Tighten it for real fleets.
-
----
-
-## ISC dhcpd end-of-life note
-
-ISC has ended maintenance of `dhcpd` in favor of **Kea**. RHEL 9 still ships
-`dhcp-server` (this `dhcpd`) and it remains common in existing production, so it is valid
-to learn. When you move to the modern path, Kea uses JSON configuration and a similar
-host-reservation model — the PXE concepts (`next-server` / boot-file equivalents) carry
-straight over.
-
----
-
-## UEFI variant
-
-This guide targets **BIOS** firmware. For UEFI targets the only changes are: serve a
-GRUB EFI binary (`shim` + `grubx64.efi`) via the DHCP `filename` (with client-arch
-detection if you mix BIOS and UEFI), and use a `grub.cfg` instead of `pxelinux.cfg`. The
-DHCP reservations, DNS, HTTP tree, and Kickstart files are identical.
